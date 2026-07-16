@@ -2,10 +2,21 @@ import { useState } from 'react'
 
 // component for showing statistics
 const Statistics = (props) => {
-  // calculations for stats
   const total = props.good + props.neutral + props.bad
-  const average = total === 0 ? 0 : (props.good - props.bad) / total
-  const positive = total === 0 ? 0 : (props.good / total) * 100
+
+  // render this if no feedback has been given yet
+  if (total === 0) {
+    return (
+      <div>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+
+  // calculations (no division by zero risk because of the check above)
+  const average = (props.good - props.bad) / total
+  const positive = (props.good / total) * 100
 
   return (
     <div>

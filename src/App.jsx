@@ -12,18 +12,33 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
    
-  // state to store the index of the selected anecdote
+  // state for the selected anecdote index
   const [selected, setSelected] = useState(0)
 
-  // function to generate a random index and update state
+  // state array to store votes for each anecdote, initialized with zeros
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+
+  // function to select a random anecdote
   const handleNextClick = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length)
     setSelected(randomIndex)
   }
 
+  // function to handle voting for the active anecdote
+  const handleVoteClick = () => {
+    // create a copy of the votes array as suggested in the instructions
+    const copy = [...votes]
+    // increment the value of the selected index by 1
+    copy[selected] += 1
+    // update state with the modified copy
+    setVotes(copy)
+  }
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={handleVoteClick}>vote</button>
       <button onClick={handleNextClick}>next anecdote</button>
     </div>
   )
